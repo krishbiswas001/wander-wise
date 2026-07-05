@@ -1,0 +1,33 @@
+@baseurl =http://localhost:3000
+@userId = 6a4a475447fef9a3779fd821
+
+### TEST API
+GET {{baseurl}}
+
+
+### CREATE USER
+POST {{baseurl}}/user
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "test123"
+}
+
+### GET ALL USERS
+GET {{baseurl}}/user
+
+### GET USER BY ID
+GET {{baseurl}}/user/{{userId}}
+
+### UPDATE USER BY ID
+PATCH {{baseurl}}/user/{{userId}}
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated"
+}
+
+###DELETE USER BY ID
+DELETE {{baseurl}}/user/{{userId}}

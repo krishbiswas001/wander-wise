@@ -1,6 +1,7 @@
 //const  express= require('express'); //Import the expreess library commonjs module outdated
 
 import express from 'express'; //   ES modules (modern approach)
+import connectDB from './config/database.js';//this imports the connectDB function from the config/database.js file, which is responsible for connecting to the MongoDB database
 //require('dotenv').config(); -> older approach to load  .env variable
 //import dotenv from 'dotenv';
 
@@ -10,30 +11,36 @@ import express from 'express'; //   ES modules (modern approach)
 //everything in js is object(has properties and methods)
 //$() this is a function that takes a string as an argument and returns an object that represents the express application
 
-import connectDB from './config/database.js';//this imports the connectDB function from the config/database.js file, which is responsible for connecting to the MongoDB database
+// import connectDB from './config/database.js';//this imports the connectDB function from the config/database.js file, which is responsible for connecting to the MongoDB database
 
+import Handlers from './handlers/index.js';//this imports the Handlers from the handlers/index.js file, which is responsible for handling the routes of the application
+import errorMiddleware from './middlewares/error.js'; //this imports the errorMiddleware from the middlewares/error.js file, which is responsible for handling errors in the application
 const  app = express(); // this creates an instance of the express application
-const port = process.env.PORT ;
+const port = process.env.PORT || 3000;
 
 //old approach
-function helloWorldOld(req,res){
-    res.send('Hello World');
-}
+// function helloWorldOld(req,res){
+//     res.send('Hello World');
+// }
 
-//new approach arrow function
-//named approach
-const helloWorldNew = (req,res) => {
-    res.send('Balen Sarkar🤫');
-}
+// //new approach arrow function
+// //named approach
+// const helloWorldNew = (req,res) => {
+//     res.send('Balen Sarkar🤫');
+// }
 
 // app.get('/',(req,res)=>{ 
 //     res.send('Hello World'); 
 // });
 
-app.get('/',helloWorldNew); // '/' is the root route of the application, and helloWorldNew is the callback function that will be executed when a GET request is made to this route
+// app.get('/',helloWorldNew); // '/' is the root route of the application, and helloWorldNew is the callback function that will be executed when a GET request is made to this route
 
 connectDB();
 
+app.use(express.json());
+app.use("/", Handlers);
+app.use(errorMiddleware); // Add the error handling middleware after all other routes and middleware
+ 
 app.listen(port,() =>{ 
     console.log(`Example app listening at http://localhost:${port}`); 
 });

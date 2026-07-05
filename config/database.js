@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-    try { //try does not work then catch will handle the error
-        await mongoose.connect(process.env.MONGO_URI);
+    try {
+        await mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/wanderwise");
         console.log("MongoDB connected successfully");
-    } catch (error) { //catch will handle the error if there is any error while connecting to the database
-        console.error("MongoDB connection error:", error);
-        process.exit(1); // Exit the process with failure
+    } catch (error) {
+        console.error("MongoDB connection error:", error.message);
+        console.warn("Continuing without a database connection for now.");
     }
 };
 
-//commonjs => module.exports = connectDB; // older approach to export the connectDB function
-export default connectDB; // ES modules approach to export the connectDB function
+export default connectDB;
