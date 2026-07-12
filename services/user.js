@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import User from '../modules/user.js';
 import { NotFoundError } from '../errors/not-found.js';
 
 export const create = async (data) => {

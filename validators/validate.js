@@ -1,4 +1,4 @@
-import { validatorsResult } from "express-validator";
+import { validationResult } from "express-validator";
 import { ValidationError } from "../errors/validation.js";
 
 /* 
@@ -6,11 +6,10 @@ import { ValidationError } from "../errors/validation.js";
 *This middleware checks validation results after validattirs have run 
 */
 
-
 export const validate = (req, res, next) => {
-    const errors = validatorsResult(req);
-    if(!errors.isEmpty()){
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         return next(new ValidationError("Validation failed", errors.array()));
-    }   
+    }
     next();
 };
