@@ -37,7 +37,16 @@ POST {{baseurl}}/auth/register
 Content-Type: application/json
 
 {
-  "name": "Jane Doe",
+  "name": "dink doe",
+  "email": "dink.doe@example.com",
+  "password": "test123"
+}
+
+###LOGIN USER
+POST {{baseurl}}/auth/login
+Content-Type: application/json
+
+{
   "email": "dink.doe@example.com",
   "password": "test123"
 }
